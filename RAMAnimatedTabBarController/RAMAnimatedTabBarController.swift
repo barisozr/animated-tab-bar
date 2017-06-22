@@ -67,7 +67,7 @@ open class RAMAnimatedTabBarItem: UITabBarItem {
   @IBOutlet open var animation: RAMItemAnimation!
   
   /// The font used to render the UITabBarItem text.
-  open var textFont: UIFont = UIFont.systemFont(ofSize: 10)
+  open var textFont: UIFont = UIFont(name: "HelveticaNeue", size: 10)!
   
   /// The color of the UITabBarItem text.
   @IBInspectable open var textColor: UIColor = UIColor.black
@@ -299,7 +299,7 @@ open class RAMAnimatedTabBarController: UITabBarController {
       textLabel.font = item.textFont
       textLabel.textAlignment = NSTextAlignment.center
       textLabel.translatesAutoresizingMaskIntoConstraints = false
-      
+      textLabel.sizeToFit()
       container.backgroundColor = (items as [RAMAnimatedTabBarItem])[index].bgDefaultColor
       
       container.addSubview(icon)
@@ -307,7 +307,8 @@ open class RAMAnimatedTabBarController: UITabBarController {
       
       container.addSubview(textLabel)
       let textLabelWidth = tabBar.frame.size.width / CGFloat(items.count) - 5.0
-      createConstraints(textLabel, container: container, size: CGSize(width: textLabelWidth , height: 10), yOffset: 16 - item.yOffSet)
+      let textLabelHeight = textLabel.frame.size.height
+      createConstraints(textLabel, container: container, size: CGSize(width: textLabelWidth , height: textLabelHeight), yOffset: 16 - item.yOffSet)
       
       if item.isEnabled == false {
         icon.alpha      = 0.5
